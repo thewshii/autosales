@@ -186,6 +186,13 @@ li + li {
   font-weight: 700;
 }
 
+.application-form .checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+}
+
 .application-form input,
 .application-form textarea {
   width: 100%;
@@ -200,6 +207,11 @@ li + li {
 .application-form textarea {
   resize: vertical;
   min-height: 7rem;
+}
+
+.application-form .checkbox-row input {
+  width: auto;
+  margin: 0;
 }
 
 .application-form button {

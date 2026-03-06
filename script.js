@@ -9,7 +9,9 @@ if (form) {
     const name = (formData.get('name') || '').toString().trim();
     const email = (formData.get('email') || '').toString().trim();
     const phone = (formData.get('phone') || '').toString().trim();
+    const cities = (formData.get('cities') || '').toString().trim();
     const message = (formData.get('message') || '').toString().trim();
+    const noEmailSendConfirmed = formData.get('noEmailSend') ? 'Yes' : 'No';
 
     const recipients = 'ampliftsllc@icloud.com,thewshii@gmail.com';
     const subject = 'Inquiry About Joining the Bot Network';
@@ -19,6 +21,8 @@ if (form) {
       `Name: ${name}`,
       `Email: ${email}`,
       `Phone: ${phone || 'Not provided'}`,
+      `Allowed cities: ${cities}`,
+      `Bot will not send emails acknowledged: ${noEmailSendConfirmed}`,
       '',
       'Message:',
       message

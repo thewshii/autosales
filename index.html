@@ -95,8 +95,16 @@
         <label for="app-phone">Phone</label>
         <input id="app-phone" name="phone" type="tel" />
 
+        <label for="app-cities">Allowed cities</label>
+        <input id="app-cities" name="cities" type="text" placeholder="Example: San Juan, Carolina, Bayamon" required />
+
         <label for="app-message">Inquiry details</label>
         <textarea id="app-message" name="message" rows="4" placeholder="Tell us your interest in joining the bot network." required></textarea>
+
+        <label class="checkbox-row" for="app-no-email-send">
+          <input id="app-no-email-send" name="noEmailSend" type="checkbox" required />
+          I understand my bot will not send emails.
+        </label>
 
         <button class="btn btn-primary" type="submit">Send Inquiry</button>
       </form>

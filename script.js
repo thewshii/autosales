@@ -8,6 +8,8 @@ const outCost = document.getElementById('out-cost');
 const outNet = document.getElementById('out-net');
 
 function calculateROI() {
+  if (!calcVehicles || !calcRevenue) return;
+
   const vehicles = parseInt(calcVehicles.value) || 0;
   const revPerTrip = parseFloat(calcRevenue.value) || 0;
   
@@ -26,24 +28,29 @@ function calculateROI() {
   const totalMonthlyCost = vehicles * 300;
   const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
-  outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;
-  outCost.textContent = `$${totalMonthlyCost.toLocaleString()}`;
-  outNet.textContent = `$${netGain.toLocaleString()}`;
-
-  if (netGain < 0) {
-    outNet.classList.remove('text-emerald');
-    outNet.classList.add('text-red');
-  } else {
-    outNet.classList.remove('text-red');
-    outNet.classList.add('text-emerald');
+  if (outRevenue) outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;
+  if (outCost) outCost.textContent = `$${totalMonthlyCost.toLocaleString()}`;
+  if (outNet) {
+    outNet.textContent = `$${netGain.toLocaleString()}`;
+    
+    // Visual feedback for profit/loss
+    if (netGain < 0) {
+      outNet.classList.remove('text-emerald');
+      outNet.classList.add('text-red');
+    } else {
+      outNet.classList.remove('text-red');
+      outNet.classList.add('text-emerald');
+    }
   }
 }
 
+// Add event listeners and run initial calculation
 if (calcVehicles && calcRevenue) {
-  [calcVehicles, calcRevenue].forEach(input => {
-    input.addEventListener('input', calculateROI);
-  });
-  calculateROI();
+  calcVehicles.addEventListener('input', calculateROI);
+  calcRevenue.addEventListener('input', calculateROI);
+  
+  // Force a small delay to ensure DOM is fully ready for values
+  setTimeout(calculateROI, 100);
 }
 
 // Onboarding & Stripe Logic
@@ -57,7 +64,10 @@ let checkoutUrl = '';
 if (form) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    statusMsg.textContent = 'Processing profile...';
+    if (statusMsg) {
+      statusMsg.textContent = 'Processing profile...';
+      statusMsg.classList.remove('text-red', 'text-emerald');
+    }
     
     const formData = new FormData(form);
     const data = {
@@ -80,16 +90,22 @@ if (form) {
 
       if (result.url) {
         checkoutUrl = result.url;
-        paymentStep.style.display = 'block';
-        paymentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        statusMsg.textContent = 'Profile saved. Please complete the subscription payment below.';
-        statusMsg.classList.add('text-emerald');
+        if (paymentStep) {
+          paymentStep.style.display = 'block';
+          paymentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (statusMsg) {
+          statusMsg.textContent = 'Profile saved. Please complete the subscription payment below.';
+          statusMsg.classList.add('text-emerald');
+        }
       } else {
         throw new Error(result.error || 'Failed to create checkout session');
       }
     } catch (err) {
-      statusMsg.textContent = `Error: ${err.message}`;
-      statusMsg.classList.add('text-red');
+      if (statusMsg) {
+        statusMsg.textContent = `Error: ${err.message}`;
+        statusMsg.classList.add('text-red');
+      }
     }
   });
 }
@@ -105,11 +121,15 @@ if (stripeBtn) {
 // Handle Success/Cancel states
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('success')) {
-  statusMsg.textContent = 'Subscription successful! Our team will reach out within 24 hours to complete your setup.';
-  statusMsg.classList.add('text-emerald');
-  statusMsg.scrollIntoView({ behavior: 'smooth' });
+  if (statusMsg) {
+    statusMsg.textContent = 'Subscription successful! Our team will reach out within 24 hours to complete your setup.';
+    statusMsg.classList.add('text-emerald');
+    statusMsg.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 if (urlParams.get('canceled')) {
-  statusMsg.textContent = 'Payment canceled. Your profile is saved, but you must subscribe to activate the service.';
-  statusMsg.classList.add('text-red');
+  if (statusMsg) {
+    statusMsg.textContent = 'Payment canceled. Your profile is saved, but you must subscribe to activate the service.';
+    statusMsg.classList.add('text-red');
+  }
 }

@@ -1,19 +1,23 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 module.exports = async (req, res) => {
+  // 1. Check for Secret Key
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('CRITICAL: STRIPE_SECRET_KEY is not defined in environment variables.');
+    return res.status(500).json({ 
+      error: 'Backend Configuration Error: Stripe Secret Key is missing. Please add STRIPE_SECRET_KEY to Vercel environment variables.' 
+    });
+  }
+
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { name, company, email, phone, vehicles, preferences } = req.body;
 
   try {
-    // 1. Log the lead (In a real app, save to DB or send email)
-    console.log('New Lead Received:', { name, company, email, phone, vehicles, preferences });
-
     // 2. Create Stripe Checkout Session
-    // We assume you have a Product in Stripe with a recurring price.
-    // If not, we can create a dynamic one or use a Price ID from your dashboard.
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_email: email,
@@ -23,31 +27,31 @@ module.exports = async (req, res) => {
             currency: 'usd',
             product_data: {
               name: 'SEE.SMART Vehicle Slot',
-              description: `Automated dispatch for ${company}`,
+              description: `Automated dispatch for ${company || 'your fleet'}`,
             },
             unit_amount: 30000, // $300.00
             recurring: {
               interval: 'month',
             },
           },
-          quantity: parseInt(vehicles) || 1,
+          quantity: Math.max(1, parseInt(vehicles) || 1),
         },
       ],
       mode: 'subscription',
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
       metadata: {
-        name,
-        company,
-        phone,
-        vehicles,
-        preferences: preferences.substring(0, 500), // Stripe metadata has a character limit
+        name: name || 'Not provided',
+        company: company || 'Not provided',
+        phone: phone || 'Not provided',
+        vehicles: vehicles || '1',
+        preferences: (preferences || 'None').substring(0, 500),
       },
     });
 
-    res.status(200).json({ url: session.url });
+    return res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error('Stripe Error:', err);
-    res.status(500).json({ error: err.message });
+    console.error('Stripe Session Error:', err);
+    return res.status(500).json({ error: err.message });
   }
 };

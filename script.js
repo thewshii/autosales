@@ -1,143 +1,90 @@
 // ROI Calculator Logic
-const initCalculator = () => {
+function calculateROI() {
   const calcVehicles = document.getElementById('calc-vehicles');
   const calcRevenue = document.getElementById('calc-revenue');
   const displayTotalTrips = document.getElementById('display-total-trips');
-
   const outRevenue = document.getElementById('out-revenue');
   const outCost = document.getElementById('out-cost');
   const outNet = document.getElementById('out-net');
 
-  function calculateROI() {
-    if (!calcVehicles || !calcRevenue) return;
+  if (!calcVehicles || !calcRevenue) return;
 
-    const vehicles = parseInt(calcVehicles.value) || 0;
-    const revPerTrip = parseFloat(calcRevenue.value) || 0;
-    
-    // Fixed multiplier: 13 trips per vehicle per week
-    const weeklyTripsPerVehicle = 13;
-    const totalWeeklyTrips = vehicles * weeklyTripsPerVehicle;
-    
-    // Update total trips display
-    if (displayTotalTrips) {
-      displayTotalTrips.textContent = totalWeeklyTrips.toLocaleString();
-    }
+  const vehicles = parseInt(calcVehicles.value) || 0;
+  const revPerTrip = parseFloat(calcRevenue.value) || 0;
+  
+  // Benchmark: 13 trips per vehicle per week
+  const totalWeeklyTrips = vehicles * 13;
+  
+  if (displayTotalTrips) displayTotalTrips.textContent = totalWeeklyTrips.toLocaleString();
 
-    // Assume 4 weeks per month for conservative estimate
-    const monthlyTrips = totalWeeklyTrips * 4;
-    const totalMonthlyRevenue = monthlyTrips * revPerTrip;
-    const totalMonthlyCost = vehicles * 300;
-    const netGain = totalMonthlyRevenue - totalMonthlyCost;
+  // Conservative Monthly Math (4 weeks)
+  const totalMonthlyRevenue = totalWeeklyTrips * 4 * revPerTrip;
+  const totalMonthlyCost = vehicles * 300;
+  const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
-    if (outRevenue) outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;
-    if (outCost) outCost.textContent = `$${totalMonthlyCost.toLocaleString()}`;
-    if (outNet) {
-      outNet.textContent = `$${netGain.toLocaleString()}`;
-      
-      // Visual feedback for profit/loss
-      if (netGain < 0) {
-        outNet.classList.remove('text-emerald');
-        outNet.classList.add('text-red');
-      } else {
-        outNet.classList.remove('text-red');
-        outNet.classList.add('text-emerald');
-      }
-    }
+  if (outRevenue) outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;
+  if (outCost) outCost.textContent = `$${totalMonthlyCost.toLocaleString()}`;
+  if (outNet) {
+    outNet.textContent = `$${netGain.toLocaleString()}`;
+    outNet.className = netGain < 0 ? 'text-red' : 'text-emerald';
   }
-
-  if (calcVehicles && calcRevenue) {
-    calcVehicles.addEventListener('input', calculateROI);
-    calcRevenue.addEventListener('input', calculateROI);
-    // Initial trigger
-    calculateROI();
-  }
-};
+}
 
 // Onboarding & Stripe Logic
-const initOnboarding = () => {
-  const form = document.getElementById('onboarding-form');
-  const paymentStep = document.getElementById('payment-step');
-  const stripeBtn = document.getElementById('stripe-checkout-btn');
+async function handleOnboarding(event) {
+  event.preventDefault();
   const statusMsg = document.getElementById('form-status');
+  const paymentStep = document.getElementById('payment-step');
+  if (statusMsg) statusMsg.textContent = 'Processing profile...';
 
-  let checkoutUrl = '';
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData.entries());
 
-  if (form) {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (statusMsg) {
-        statusMsg.textContent = 'Processing profile...';
-        statusMsg.classList.remove('text-red', 'text-emerald');
-      }
-      
-      const formData = new FormData(form);
-      const data = {
-        name: formData.get('name'),
-        company: formData.get('company'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        vehicles: formData.get('vehicles'),
-        preferences: formData.get('preferences'),
-      };
-
-      try {
-        const response = await fetch('/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-
-        const result = await response.json();
-
-        if (result.url) {
-          checkoutUrl = result.url;
-          if (paymentStep) {
-            paymentStep.style.display = 'block';
-            paymentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-          if (statusMsg) {
-            statusMsg.textContent = 'Profile saved. Please complete the subscription payment below.';
-            statusMsg.classList.add('text-emerald');
-          }
-        } else {
-          throw new Error(result.error || 'Failed to create checkout session');
-        }
-      } catch (err) {
-        if (statusMsg) {
-          statusMsg.textContent = `Error: ${err.message}`;
-          statusMsg.classList.add('text-red');
-        }
-      }
+  try {
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
+    const result = await response.json();
+    if (result.url) {
+      if (paymentStep) paymentStep.style.display = 'block';
+      if (statusMsg) statusMsg.textContent = 'Profile saved. Complete Step 2 below.';
+      
+      // Store URL for the button
+      window.stripeCheckoutUrl = result.url;
+      paymentStep.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      throw new Error(result.error);
+    }
+  } catch (err) {
+    if (statusMsg) statusMsg.textContent = `Error: ${err.message}`;
   }
+}
 
+// Initialization
+function init() {
+  const calcVehicles = document.getElementById('calc-vehicles');
+  const calcRevenue = document.getElementById('calc-revenue');
+  const obForm = document.getElementById('onboarding-form');
+  const stripeBtn = document.getElementById('stripe-checkout-btn');
+
+  if (calcVehicles) calcVehicles.addEventListener('input', calculateROI);
+  if (calcRevenue) calcRevenue.addEventListener('input', calculateROI);
+  if (obForm) obForm.addEventListener('submit', handleOnboarding);
   if (stripeBtn) {
     stripeBtn.addEventListener('click', () => {
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
+      if (window.stripeCheckoutUrl) window.location.href = window.stripeCheckoutUrl;
     });
   }
 
-  // Handle Success/Cancel states
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('success')) {
-    if (statusMsg) {
-      statusMsg.textContent = 'Subscription successful! Our team will reach out within 24 hours to complete your setup.';
-      statusMsg.classList.add('text-emerald');
-      statusMsg.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  if (urlParams.get('canceled')) {
-    if (statusMsg) {
-      statusMsg.textContent = 'Payment canceled. Your profile is saved, but you must subscribe to activate the service.';
-      statusMsg.classList.add('text-red');
-    }
-  }
-};
+  // Initial calculations
+  calculateROI();
+}
 
-// Initialize everything when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  initCalculator();
-  initOnboarding();
-});
+// Run immediately and also on DOM ready
+init();
+document.addEventListener('DOMContentLoaded', init);
+window.onload = init;
+// Final fallback to ensure non-zero values
+setTimeout(calculateROI, 500);

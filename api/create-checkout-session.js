@@ -37,9 +37,11 @@ module.exports = async (req, res) => {
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
       metadata: {
+        name,
         company,
         phone,
         vehicles,
+        preferences: preferences.substring(0, 500), // Stripe metadata has a character limit
       },
     });
 

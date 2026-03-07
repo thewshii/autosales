@@ -1,7 +1,7 @@
 // ROI Calculator Logic
 const calcVehicles = document.getElementById('calc-vehicles');
-const calcTrips = document.getElementById('calc-trips');
 const calcRevenue = document.getElementById('calc-revenue');
+const displayTotalTrips = document.getElementById('display-total-trips');
 
 const outRevenue = document.getElementById('out-revenue');
 const outCost = document.getElementById('out-cost');
@@ -9,12 +9,20 @@ const outNet = document.getElementById('out-net');
 
 function calculateROI() {
   const vehicles = parseInt(calcVehicles.value) || 0;
-  const trips = parseInt(calcTrips.value) || 0;
   const revPerTrip = parseFloat(calcRevenue.value) || 0;
+  
+  // Fixed multiplier: 13 trips per vehicle per week
+  const weeklyTripsPerVehicle = 13;
+  const totalWeeklyTrips = vehicles * weeklyTripsPerVehicle;
+  
+  // Update total trips display
+  if (displayTotalTrips) {
+    displayTotalTrips.textContent = totalWeeklyTrips.toLocaleString();
+  }
 
   // Assume 4 weeks per month for conservative estimate
-  const monthlyTrips = trips * 4;
-  const totalMonthlyRevenue = vehicles * monthlyTrips * revPerTrip;
+  const monthlyTrips = totalWeeklyTrips * 4;
+  const totalMonthlyRevenue = monthlyTrips * revPerTrip;
   const totalMonthlyCost = vehicles * 225;
   const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
@@ -31,8 +39,8 @@ function calculateROI() {
   }
 }
 
-if (calcVehicles && calcTrips && calcRevenue) {
-  [calcVehicles, calcTrips, calcRevenue].forEach(input => {
+if (calcVehicles && calcRevenue) {
+  [calcVehicles, calcRevenue].forEach(input => {
     input.addEventListener('input', calculateROI);
   });
   calculateROI();

@@ -1,43 +1,31 @@
-# Auto Sales Landing Page
+# SEE.SMART Landing Page
 
-Public website for promoting a bot network offer and collecting inbound inquiries.
+Automated NEMT Dispatch & Revenue Recovery.
 
 ## What This Project Does
 
 - Presents a marketing landing page (`index.html` + `styles.css`).
-- `Start Application` jumps users to an application form section.
-- Form submission opens the visitor's default email client (Apple Mail, Gmail app, Outlook, etc.) using a `mailto:` link.
-- The email is prefilled and addressed to:
-  - `ampliftsllc@icloud.com`
-  - `thewshii@gmail.com`
-- Subject used: `Inquiry About Joining the Bot Network`.
+- Features a dynamic ROI Calculator for operators.
+- Professional 2-step onboarding flow:
+  1. Profile submission (captures lead data via Vercel Serverless API).
+  2. Stripe Checkout redirection for subscription activation.
 
-## Important Behavior (Public Repo Note)
+## Technical Setup
 
-This project does **not** send email from a backend server.  
-It relies on the visitor having an email app configured and pressing send.
+- **Backend:** Node.js Serverless Functions (`api/` folder).
+- **Payments:** Stripe.js integration with dynamic "per vehicle" scaling.
+- **Environment Variables:**
+  - `STRIPE_SECRET_KEY`: Used in the backend to create checkout sessions.
+  - `STRIPE_PUBLISHABLE_KEY`: Used in the frontend.
 
-That means:
-- You receive inquiries directly in your inbox when users send.
-- If a user closes their mail app draft and does not send, no inquiry is delivered.
+## Deployment
 
-## Project Files
+This site is optimized for deployment on **Vercel**. 
 
-- `index.html`: page structure and form markup
-- `styles.css`: layout and visual styles
-- `script.js`: form handling and `mailto:` generation
-- `server.js`: simple static file server for local testing
+1. Push to GitHub.
+2. Import to Vercel.
+3. Add Stripe API keys to Vercel Environment Variables.
 
-## Local Development
+## Lead Capture
 
-```powershell
-cd C:\Users\thews\auto_sales
-node server.js
-```
-
-Then open `http://localhost:8080`.
-
-## Deploy (Vercel)
-
-This site can be deployed as a static project on Vercel by importing this GitHub repository.
-
+Leads are captured during the onboarding process and can be managed directly in the **Stripe Dashboard** under "Customers" or "Checkout Sessions".

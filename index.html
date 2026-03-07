@@ -1,122 +1,247 @@
-﻿<!doctype html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEMT Automation Network | automations.seesm.art</title>
-  <meta name="description" content="NEMT email analysis and scheduler bot network built for operators who want speed, coverage, and controlled competition." />
+  <title>SEE.SMART | NEMT Dispatch Automation & Revenue Recovery</title>
+  <meta name="description" content="SEE.SMART is an automated dispatch and email-handling bot for NEMT operators. Claim profitable trips faster and recover revenue." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
-  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <div class="glow-bg" aria-hidden="true"></div>
 
-  <header class="hero section">
-    <p class="eyebrow">Automations.Seesm.Art</p>
-    <h1>The NEMT Advantage You Can Feel In Your Pipeline.</h1>
-    <p class="lede">
-      Most operators are still fighting over scraps manually. This system does the heavy lift: smart email analysis,
-      strategic scheduler automation, and controlled bot competition designed to reduce saturation.
-    </p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#apply">Claim a Paid Bot Slot</a>
-      <a class="btn btn-secondary" href="#model">See The 37-Bot Model</a>
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo">SEE.<span>SMART</span></div>
+      <div class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#roi-calculator">ROI Calculator</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <a href="#onboarding" class="btn btn-sm btn-outline">Start Onboarding</a>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="hero-content">
+      <div class="badge">B2B Operational Tool for NEMT Providers</div>
+      <h1>Stop Bleeding Profitable Trips to Faster Operators.</h1>
+      <p class="lede">
+        SEE.SMART is an automated dispatch and email-handling bot that reads Meditrans inquiries, applies your custom routing logic, and claims high-value trips before human dispatchers even open the email.
+      </p>
+      <div class="hero-cta">
+        <a href="#onboarding" class="btn btn-primary">Start My First Vehicle</a>
+        <a href="#roi-calculator" class="btn btn-secondary">See My Revenue Potential</a>
+      </div>
+      <div class="trust-strip">
+        <p><strong>Early Validation:</strong> AMP Lifts LLC generated an extra $40 in profitable routing within hours of deployment.</p>
+      </div>
     </div>
   </header>
 
   <main>
-    <section id="problem" class="section card">
-      <h2>The Quiet Problem Nobody Says Out Loud</h2>
-      <p>
-        If your response speed is slow, your follow-up is inconsistent, or your outreach runs on human memory, you bleed opportunities.
-        Not because demand disappeared. Because faster systems ate your place in line.
-      </p>
-      <p>
-        This offer is built for people who are done improvising and ready for process-backed positioning.
-      </p>
-    </section>
-
-    <section id="model" class="section split">
-      <div class="card">
-        <h2>The 37-Bot Network</h2>
-        <p><strong>369 providers</strong> in the outbound universe.</p>
-        <p><strong>1 free internal bot</strong> for our in-house operation.</p>
-        <p><strong>36 paid bot positions</strong> available to market participants.</p>
-        <p><strong>$200/month per paid bot</strong> with a hard slot model.</p>
+    <section id="problem" class="section container">
+      <div class="section-header">
+        <h2>Why You Are Losing Money</h2>
+        <p>The quiet operational leaks costing you thousands a month.</p>
       </div>
-      <div class="card value-box">
-        <p class="value-label">Monthly Gross At Capacity</p>
-        <p class="value">$7,200</p>
-        <p class="small">36 paid bots x $200/month</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⏳</div>
+          <h3>Delayed Replies</h3>
+          <p>By the time your dispatcher reads, analyzes, and responds to a trip email, a faster system has already claimed it.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h3>Manual Triage</h3>
+          <p>Relying on human memory for routing preferences, leg differences, and vehicle restrictions leads to bad fits and missed opportunities.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💸</div>
+          <h3>Lost Revenue</h3>
+          <p>Every missed trip is empty mileage. Operators are leaving an estimated $300 to $400 per week, per vehicle, on the table.</p>
+        </div>
       </div>
     </section>
 
-    <section id="why" class="section card">
-      <h2>Why This Is Structured With Game Theory</h2>
-      <p>
-        The network is intentionally designed so bots compete under guardrails. That means market pressure exists,
-        but saturation gets managed. Translation: healthier long-term signal quality and better operating conditions.
-      </p>
-      <p>
-        It is not a random blast engine. It is a controlled system built for repeatable advantage.
-      </p>
+    <section id="how-it-works" class="section container">
+      <div class="section-header">
+        <h2>How SEE.SMART Works</h2>
+        <p>Revenue-focused automation that integrates seamlessly with your existing flow.</p>
+      </div>
+      <div class="process-steps">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3>Detect & Analyze</h3>
+          <p>The bot monitors your inbound Meditrans emails in real-time. It instantly extracts pickup, drop-off, requirements, and pricing data.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3>Filter by Preference</h3>
+          <p>It cross-references the trip against your specific routing preferences, restrictions, and operational logic to ensure a profitable fit.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3>Automated Claim</h3>
+          <p>If the trip matches your criteria, the bot immediately fires off a tailored response to claim the trip—beating manual dispatchers to the punch.</p>
+        </div>
+      </div>
     </section>
 
-    <section id="offer" class="section card">
-      <h2>What You’re Buying</h2>
-      <ul>
-        <li>Access to one paid automation bot seat in the NEMT network</li>
-        <li>Email analysis and scheduler workflow leverage</li>
-        <li>Controlled-competition architecture to limit saturation pressure</li>
-        <li>Simple monthly pricing: <strong>$200 per bot</strong></li>
-      </ul>
-      <p class="small">
-        Availability is limited to 36 paid seats. Once filled, new placements move to waitlist.
-      </p>
+    <section id="roi-calculator" class="section container">
+      <div class="roi-container card">
+        <div class="roi-header">
+          <h2>Revenue Recovery Calculator</h2>
+          <p>Calculate your potential upside based on conservative recovery estimates.</p>
+        </div>
+        <div class="roi-grid">
+          <div class="roi-inputs">
+            <div class="input-group">
+              <label for="calc-vehicles">Number of Vehicles in Fleet</label>
+              <input type="number" id="calc-vehicles" value="5" min="1" />
+            </div>
+            <div class="input-group">
+              <label for="calc-trips">Avg. Recovered Trips per Vehicle (Weekly)</label>
+              <input type="number" id="calc-trips" value="3" min="1" />
+              <small>Most operators easily miss 3-5 profitable trips a week.</small>
+            </div>
+            <div class="input-group">
+              <label for="calc-revenue">Avg. Revenue per Trip ($)</label>
+              <input type="number" id="calc-revenue" value="45" min="1" />
+            </div>
+          </div>
+          <div class="roi-outputs">
+            <div class="output-row">
+              <span>Estimated Monthly Recovered Revenue</span>
+              <strong id="out-revenue" class="text-emerald">$0</strong>
+            </div>
+            <div class="output-row">
+              <span>Monthly SEE.SMART Cost</span>
+              <strong id="out-cost" class="text-red">$0</strong>
+            </div>
+            <div class="output-divider"></div>
+            <div class="output-row total">
+              <span>Estimated Net Gain (Monthly)</span>
+              <strong id="out-net" class="text-emerald">$0</strong>
+            </div>
+            <p class="roi-disclaimer">Assumes 4 weeks per month. Results vary based on local market volume and route fit.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="apply" class="section card callout">
-      <h2>Apply For A Bot Seat</h2>
-      <p>
-        To lock in a slot, send your payment and onboarding details. Payments route directly to your designated bank flow
-        (FirstBank USVI/PR setup) after your final payment wiring configuration is connected.
-      </p>
-      <a class="btn btn-primary" href="#application-form">Start Application</a>
-      <form id="application-form" class="application-form" aria-label="Bot network application form">
-        <label for="app-name">Full name</label>
-        <input id="app-name" name="name" type="text" required />
+    <section id="pricing" class="section container">
+      <div class="pricing-card card">
+        <div class="pricing-header">
+          <h2>Pricing Built for Operators</h2>
+          <p>Priced to pay for itself with just a few recovered trips.</p>
+        </div>
+        <div class="price">
+          <span class="currency">$</span>299<span class="interval">/vehicle/month</span>
+        </div>
+        <ul class="features-list">
+          <li>Real-time Meditrans email analysis</li>
+          <li>Custom routing preference configuration</li>
+          <li>Automated trip claiming responses</li>
+          <li>Fast onboarding & deployment</li>
+          <li>No long-term contracts</li>
+        </ul>
+        <a href="#onboarding" class="btn btn-primary btn-block">Start Paid Onboarding</a>
+      </div>
+    </section>
 
-        <label for="app-email">Email</label>
-        <input id="app-email" name="email" type="email" required />
+    <section id="faq" class="section container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item card">
+          <h4>What does the bot actually do?</h4>
+          <p>It reads your inbound dispatch emails, evaluates the trip details against your specific rules, and replies instantly to claim trips that match your criteria, securing them before competitors do.</p>
+        </div>
+        <div class="faq-item card">
+          <h4>Does it replace dispatch?</h4>
+          <p>No. It gives your dispatchers leverage. It acts as a lightning-fast filter that handles the initial land-grab for profitable trips, letting your humans focus on actual logistics and edge cases.</p>
+        </div>
+        <div class="faq-item card">
+          <h4>How fast can I get started?</h4>
+          <p>Onboarding usually takes less than 48 hours. Once you submit your preferences and set up your email forwarding, we deploy your bot.</p>
+        </div>
+        <div class="faq-item card">
+          <h4>Can it be tailored to my trip preferences?</h4>
+          <p>Yes. You provide your operational logic (e.g., specific zip codes, minimum miles, wheelchair vs. ambulatory) and the bot only acts on trips that fit your parameters.</p>
+        </div>
+      </div>
+    </section>
 
-        <label for="app-phone">Phone</label>
-        <input id="app-phone" name="phone" type="tel" />
+    <section id="onboarding" class="section container">
+      <div class="onboarding-container card">
+        <h2>Ready to Stop Missing Trips?</h2>
+        <p>Start your paid onboarding today. Fill out your operational profile below, then activate your subscription.</p>
+        
+        <form id="onboarding-form" class="onboarding-form">
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="ob-name">Full Name</label>
+              <input type="text" id="ob-name" name="name" required />
+            </div>
+            <div class="input-group">
+              <label for="ob-company">Company Name</label>
+              <input type="text" id="ob-company" name="company" required />
+            </div>
+            <div class="input-group">
+              <label for="ob-email">Business Email</label>
+              <input type="email" id="ob-email" name="email" required />
+            </div>
+            <div class="input-group">
+              <label for="ob-phone">Phone Number</label>
+              <input type="tel" id="ob-phone" name="phone" required />
+            </div>
+            <div class="input-group full-width">
+              <label for="ob-vehicles">Number of Vehicles to Enroll</label>
+              <input type="number" id="ob-vehicles" name="vehicles" min="1" value="1" required />
+            </div>
+            <div class="input-group full-width">
+              <label for="ob-preferences">Primary Routing Preferences (Cities, Service Types)</label>
+              <textarea id="ob-preferences" name="preferences" rows="3" required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">Step 1: Submit Profile</button>
+        </form>
 
-        <label for="app-cities">Allowed cities</label>
-        <input id="app-cities" name="cities" type="text" placeholder="Example: New Orleans, Baton Rouge, Lafayette" required />
-
-        <label for="app-message">Inquiry details</label>
-        <textarea id="app-message" name="message" rows="4" placeholder="Tell us your interest in joining the bot network." required></textarea>
-
-        <label class="checkbox-row" for="app-no-email-send">
-          <input id="app-no-email-send" name="noEmailSend" type="checkbox" required />
-          I understand my bot will not send emails.
-        </label>
-
-        <button class="btn btn-primary" type="submit">Send Inquiry</button>
-      </form>
-      <p id="application-status" class="small"></p>
+        <div id="payment-step" class="payment-step" style="display: none;">
+          <h3>Step 2: Activate Subscription</h3>
+          <p>Profile received. Subscribe below to activate your first vehicle slot ($299/mo). If you are enrolling multiple vehicles, our team will invoice the remainder during setup.</p>
+          <div class="paypal-wrapper">
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_s-xclick" />
+              <input type="hidden" name="hosted_button_id" value="NDDXUED7R39JW" />
+              <input type="hidden" name="currency_code" value="USD" />
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Subscribe" />
+            </form>
+          </div>
+        </div>
+        <p id="form-status" class="form-status-msg"></p>
+      </div>
     </section>
   </main>
 
-  <footer class="section footer">
-    <p>automations.seesm.art</p>
-    <p class="small">Built for decisive operators. Not browsers.</p>
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo">SEE.<span>SMART</span></div>
+        <p>Automated NEMT Dispatch & Revenue Recovery.</p>
+      </div>
+      <div class="footer-links">
+        <p>Built for decisive operators. Not browsers.</p>
+        <p>&copy; 2026 SEE.SMART. All rights reserved.</p>
+      </div>
+    </div>
   </footer>
+
   <script src="./script.js"></script>
 </body>
 </html>
-

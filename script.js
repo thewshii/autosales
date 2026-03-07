@@ -15,7 +15,7 @@ function calculateROI() {
   // Assume 4 weeks per month for conservative estimate
   const monthlyTrips = trips * 4;
   const totalMonthlyRevenue = vehicles * monthlyTrips * revPerTrip;
-  const totalMonthlyCost = vehicles * 299;
+  const totalMonthlyCost = vehicles * 225;
   const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
   outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;

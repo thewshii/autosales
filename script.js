@@ -22,7 +22,6 @@ function calculateROI() {
   outCost.textContent = `$${totalMonthlyCost.toLocaleString()}`;
   outNet.textContent = `$${netGain.toLocaleString()}`;
 
-  // Change color if net gain is negative (unlikely with defaults, but good practice)
   if (netGain < 0) {
     outNet.classList.remove('text-emerald');
     outNet.classList.add('text-red');
@@ -32,62 +31,77 @@ function calculateROI() {
   }
 }
 
-// Add event listeners to calculate on input change
 if (calcVehicles && calcTrips && calcRevenue) {
   [calcVehicles, calcTrips, calcRevenue].forEach(input => {
     input.addEventListener('input', calculateROI);
   });
-  
-  // Initial calculation
   calculateROI();
 }
 
-// Onboarding Form Logic
+// Onboarding & Stripe Logic
 const form = document.getElementById('onboarding-form');
 const paymentStep = document.getElementById('payment-step');
+const stripeBtn = document.getElementById('stripe-checkout-btn');
 const statusMsg = document.getElementById('form-status');
 
+let checkoutUrl = '';
+
 if (form) {
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    const formData = new FormData(form);
-    const name = (formData.get('name') || '').toString().trim();
-    const company = (formData.get('company') || '').toString().trim();
-    const email = (formData.get('email') || '').toString().trim();
-    const phone = (formData.get('phone') || '').toString().trim();
-    const vehicles = (formData.get('vehicles') || '').toString().trim();
-    const preferences = (formData.get('preferences') || '').toString().trim();
-
-    const recipients = 'ampliftsllc@icloud.com,thewshii@gmail.com';
-    const subject = `New Onboarding Profile: ${company} - SEE.SMART`;
-    const body = [
-      'A new onboarding profile has been submitted for SEE.SMART.',
-      '',
-      `Name: ${name}`,
-      `Company: ${company}`,
-      `Email: ${email}`,
-      `Phone: ${phone}`,
-      `Vehicles to Enroll: ${vehicles}`,
-      '',
-      'Routing Preferences:',
-      preferences
-    ].join('\n');
-
-    const mailtoUrl = `mailto:${recipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    statusMsg.textContent = 'Processing profile...';
     
-    // Open email client
-    window.location.href = mailtoUrl;
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      company: formData.get('company'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      vehicles: formData.get('vehicles'),
+      preferences: formData.get('preferences'),
+    };
 
-    // Reveal Step 2 (Payment)
-    if (paymentStep) {
-      paymentStep.style.display = 'block';
-      paymentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-    if (statusMsg) {
-      statusMsg.textContent = 'Profile data prepared in your email app. Please complete Step 2 above to activate your subscription.';
-      statusMsg.classList.add('text-emerald');
+      const result = await response.json();
+
+      if (result.url) {
+        checkoutUrl = result.url;
+        paymentStep.style.display = 'block';
+        paymentStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        statusMsg.textContent = 'Profile saved. Please complete the subscription payment below.';
+        statusMsg.classList.add('text-emerald');
+      } else {
+        throw new Error(result.error || 'Failed to create checkout session');
+      }
+    } catch (err) {
+      statusMsg.textContent = `Error: ${err.message}`;
+      statusMsg.classList.add('text-red');
     }
   });
+}
+
+if (stripeBtn) {
+  stripeBtn.addEventListener('click', () => {
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+    }
+  });
+}
+
+// Handle Success/Cancel states
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('success')) {
+  statusMsg.textContent = 'Subscription successful! Our team will reach out within 24 hours to complete your setup.';
+  statusMsg.classList.add('text-emerald');
+  statusMsg.scrollIntoView({ behavior: 'smooth' });
+}
+if (urlParams.get('canceled')) {
+  statusMsg.textContent = 'Payment canceled. Your profile is saved, but you must subscribe to activate the service.';
+  statusMsg.classList.add('text-red');
 }

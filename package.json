@@ -1,0 +1,24 @@
+{
+  "name": "autosales",
+  "version": "1.0.0",
+  "description": "Public website for promoting a bot network offer and collecting inbound inquiries.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewshii/autosales.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thewshii/autosales/issues"
+  },
+  "homepage": "https://github.com/thewshii/autosales#readme",
+  "dependencies": {
+    "stripe": "^20.4.1"
+  }
+}

@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
   <div class="glow-bg" aria-hidden="true"></div>
@@ -214,14 +215,9 @@
 
         <div id="payment-step" class="payment-step" style="display: none;">
           <h3>Step 2: Activate Subscription</h3>
-          <p>Profile received. Subscribe below to activate your first vehicle slot ($299/mo). If you are enrolling multiple vehicles, our team will invoice the remainder during setup.</p>
-          <div class="paypal-wrapper">
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-              <input type="hidden" name="cmd" value="_s-xclick" />
-              <input type="hidden" name="hosted_button_id" value="NDDXUED7R39JW" />
-              <input type="hidden" name="currency_code" value="USD" />
-              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Subscribe" />
-            </form>
+          <p>Profile received. Securely complete your subscription via Stripe to activate your fleet slots.</p>
+          <div class="stripe-wrapper" style="margin-top: 1.5rem;">
+            <button id="stripe-checkout-btn" class="btn btn-primary btn-block">Secure Checkout via Stripe</button>
           </div>
         </div>
         <p id="form-status" class="form-status-msg"></p>

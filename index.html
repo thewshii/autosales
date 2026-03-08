@@ -18,11 +18,13 @@
     <div class="container nav-container">
       <div class="logo">SEE.<span>SMART</span></div>
       <div class="nav-links">
+        <a href="#problem">Problem</a>
         <a href="#how-it-works">How It Works</a>
-        <a href="#roi-calculator">ROI Calculator</a>
+        <a href="#roi-calculator">Revenue</a>
+        <a href="#time-calculator">Time Saved</a>
         <a href="#pricing">Pricing</a>
       </div>
-      <a href="#onboarding" class="btn btn-sm btn-outline">Start Onboarding</a>
+      <a href="#onboarding" class="btn btn-sm btn-outline">Start</a>
     </div>
   </nav>
 
@@ -35,7 +37,7 @@
       </p>
       <div class="hero-cta">
         <a href="#onboarding" class="btn btn-primary">Start My First Vehicle</a>
-        <a href="#roi-calculator" class="btn btn-secondary">See My Revenue Potential</a>
+        <a href="#roi-calculator" class="btn btn-secondary">See My Potential</a>
       </div>
       <div class="trust-strip">
         <p><strong>Early Validation:</strong> AMP Lifts LLC generated an extra $40 in profitable routing within hours of deployment.</p>
@@ -129,6 +131,48 @@
               <strong id="out-net" class="text-emerald">$0</strong>
             </div>
             <p class="roi-disclaimer">Assumes 4 weeks per month. Results vary based on local market volume and route fit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="time-calculator" class="section container">
+      <div class="roi-container card" style="border-top-color: #3b82f6;">
+        <div class="roi-header">
+          <h2>Reclaimed Time Calculator</h2>
+          <p>See how much time your dispatchers win back for higher-level work.</p>
+        </div>
+        <div class="roi-grid">
+          <div class="roi-inputs">
+            <div class="input-group">
+              <label for="time-vehicles">Vehicles Running Bot</label>
+              <input type="number" id="time-vehicles" value="5" min="1" />
+            </div>
+            <div class="input-group">
+              <label for="time-per-trip">Minutes Saved Per Trip Handle</label>
+              <input type="number" id="time-per-trip" value="4" min="1" />
+              <small>Time spent reading, checking routes, and replying.</small>
+            </div>
+            <div class="input-group">
+              <label for="trips-per-day">Email Volume (Trips/Day/Vehicle)</label>
+              <input type="number" id="trips-per-day" value="20" min="1" />
+            </div>
+          </div>
+          <div class="roi-outputs" style="background: #0f172a; border-color: #1e293b;">
+            <div class="output-row">
+              <span>Hours Saved Per Week</span>
+              <strong id="out-hours-week" style="color: #60a5fa;">0</strong>
+            </div>
+            <div class="output-row">
+              <span>Hours Saved Per Month</span>
+              <strong id="out-hours-month" style="color: #60a5fa;">0</strong>
+            </div>
+            <div class="output-divider"></div>
+            <div class="output-row total">
+              <span>Total Reclaimed Focus Time</span>
+              <strong id="out-days-year" style="color: #60a5fa;">0 Days/Year</strong>
+            </div>
+            <p class="roi-disclaimer">Reclaim your team's energy for fleet maintenance and customer service.</p>
           </div>
         </div>
       </div>

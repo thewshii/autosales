@@ -30,6 +30,32 @@ function calculateROI() {
   }
 }
 
+// Reclaimed Time Calculator Logic
+function calculateTimeSaved() {
+  const timeVehicles = document.getElementById('time-vehicles');
+  const timePerTrip = document.getElementById('time-per-trip');
+  const tripsPerDay = document.getElementById('trips-per-day');
+  
+  const outHoursWeek = document.getElementById('out-hours-week');
+  const outHoursMonth = document.getElementById('out-hours-month');
+  const outDaysYear = document.getElementById('out-days-year');
+
+  if (!timeVehicles || !timePerTrip || !tripsPerDay) return;
+
+  const vehicles = parseInt(timeVehicles.value) || 0;
+  const minsPerTrip = parseFloat(timePerTrip.value) || 0;
+  const dailyTrips = parseFloat(tripsPerDay.value) || 0;
+
+  // Assume 6 days a week operation for NEMT
+  const weeklyHours = (vehicles * dailyTrips * 6 * minsPerTrip) / 60;
+  const monthlyHours = weeklyHours * 4.33; // Average weeks per month
+  const yearlyDays = (monthlyHours * 12) / 8; // Reclaimed 8-hour work days
+
+  if (outHoursWeek) outHoursWeek.textContent = weeklyHours.toFixed(1);
+  if (outHoursMonth) outHoursMonth.textContent = monthlyHours.toFixed(0);
+  if (outDaysYear) outDaysYear.textContent = `${yearlyDays.toFixed(0)} Work Days/Year`;
+}
+
 // Onboarding & Stripe Logic
 async function handleOnboarding(event) {
   event.preventDefault();
@@ -66,11 +92,21 @@ async function handleOnboarding(event) {
 function init() {
   const calcVehicles = document.getElementById('calc-vehicles');
   const calcRevenue = document.getElementById('calc-revenue');
+  
+  const timeVehicles = document.getElementById('time-vehicles');
+  const timePerTrip = document.getElementById('time-per-trip');
+  const tripsPerDay = document.getElementById('trips-per-day');
+
   const obForm = document.getElementById('onboarding-form');
   const stripeBtn = document.getElementById('stripe-checkout-btn');
 
   if (calcVehicles) calcVehicles.addEventListener('input', calculateROI);
   if (calcRevenue) calcRevenue.addEventListener('input', calculateROI);
+  
+  if (timeVehicles) timeVehicles.addEventListener('input', calculateTimeSaved);
+  if (timePerTrip) timePerTrip.addEventListener('input', calculateTimeSaved);
+  if (tripsPerDay) tripsPerDay.addEventListener('input', calculateTimeSaved);
+
   if (obForm) obForm.addEventListener('submit', handleOnboarding);
   if (stripeBtn) {
     stripeBtn.addEventListener('click', () => {
@@ -80,6 +116,7 @@ function init() {
 
   // Initial calculations
   calculateROI();
+  calculateTimeSaved();
 }
 
 // Run immediately and also on DOM ready
@@ -87,4 +124,7 @@ init();
 document.addEventListener('DOMContentLoaded', init);
 window.onload = init;
 // Final fallback to ensure non-zero values
-setTimeout(calculateROI, 500);
+setTimeout(() => {
+    calculateROI();
+    calculateTimeSaved();
+}, 500);

@@ -26,7 +26,7 @@
 
     // Conservative Monthly Math (4 weeks)
     const totalMonthlyRevenue = totalWeeklyTrips * 4 * revPerTrip;
-    const totalMonthlyCost = vehicles * 300;
+    const totalMonthlyCost = vehicles * 450;
     const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
     if (outRevenue) outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;

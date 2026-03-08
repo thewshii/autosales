@@ -19,14 +19,14 @@
     const vehicles = calcVehicles.valueAsNumber || parseInt(calcVehicles.value) || 0;
     const revPerTrip = calcRevenue.valueAsNumber || parseFloat(calcRevenue.value) || 0;
     
-    // Benchmark: 13 trips per vehicle per week
-    const totalWeeklyTrips = vehicles * 13;
+    // Benchmark: 50 trips per vehicle per week
+    const totalWeeklyTrips = vehicles * 50;
     
     if (displayTotalTrips) displayTotalTrips.textContent = totalWeeklyTrips.toLocaleString();
 
     // Conservative Monthly Math (4 weeks)
     const totalMonthlyRevenue = totalWeeklyTrips * 4 * revPerTrip;
-    const totalMonthlyCost = vehicles * 450;
+    const totalMonthlyCost = vehicles * 497;
     const netGain = totalMonthlyRevenue - totalMonthlyCost;
 
     if (outRevenue) outRevenue.textContent = `$${totalMonthlyRevenue.toLocaleString()}`;

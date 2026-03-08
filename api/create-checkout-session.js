@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
               name: 'SEE.SMART Vehicle Slot',
               description: `Subscription for ${company || 'your fleet'}`,
             },
-            unit_amount: 45000, // $450.00
+            unit_amount: 49700, // $497.00
             recurring: {
               interval: 'month',
             },

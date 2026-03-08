@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
       phone: phone,
       metadata: {
         company: company || 'Not provided',
+        phone: phone || 'Not provided',
         vehicles: vehicles || '1',
         preferences: (preferences || 'None').substring(0, 500),
         status: 'Lead (Form Submitted)'
@@ -49,7 +50,9 @@ module.exports = async (req, res) => {
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
       metadata: {
-        lead_customer_id: customer.id
+        lead_customer_id: customer.id,
+        company: company || 'Not provided',
+        phone: phone || 'Not provided'
       }
     });
 
